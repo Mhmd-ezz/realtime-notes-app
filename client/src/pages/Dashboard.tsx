@@ -4,6 +4,8 @@ import { useNotesSocket } from '@/hooks/notes/useNotesSocket';
 import { useEditingSync } from '@/hooks/notes/useEditingSync';
 import NoteList from '@/components/notes/NoteList';
 import CreateNoteForm from '@/components/notes/CreateNoteForm';
+import ViewModuleIcon from '@mui/icons-material/ViewModule'; 
+import ViewListIcon from '@mui/icons-material/ViewList';    
 
 import {
   Dialog,
@@ -20,6 +22,7 @@ export default function Dashboard() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [view, setView] = useState<'grid' | 'list'>('grid');
 
   useNotesSocket();
   useEditingSync();
@@ -38,9 +41,19 @@ export default function Dashboard() {
   return (
     <Stack spacing={4}>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography variant="h5" fontWeight="bold">
-          Your Notes
-        </Typography>
+        <Stack direction="row" spacing={1} alignItems="center">
+          <IconButton
+            onClick={() => setView((v) => (v === 'grid' ? 'list' : 'grid'))}
+            aria-label="Toggle View"
+            title='Toggle View'
+            sx={{ color: 'primary.main' }}
+          >
+            {view === 'grid' ? <ViewListIcon /> : <ViewModuleIcon />}
+          </IconButton>
+          <Typography variant="h5" fontWeight="bold">
+            Your Notes
+          </Typography>
+        </Stack>
         <Button
           variant="contained"
           startIcon={<AddIcon />}
@@ -55,6 +68,7 @@ export default function Dashboard() {
       ) : (
         <NoteList
           notes={notes}
+          view={view}
           isLoading={isLoading}
           isFetchingNextPage={isFetchingNextPage}
           fetchNextPage={fetchNextPage}
