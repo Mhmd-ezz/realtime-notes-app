@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "typeRoots": ["./node_modules/@types", "./src/types"], 
+    "target": "es2016",                                 
+    "outDir": "dist",
+    /* Modules */
+    "module": "commonjs",                               
+    "esModuleInterop": true,                            
+    "forceConsistentCasingInFileNames": true,           
+    /* Type Checking */
+    "strict": true,                                     
+    /* Completeness */              
+    "skipLibCheck": true                               
+  }
+}
